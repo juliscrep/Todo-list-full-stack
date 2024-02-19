@@ -27,7 +27,7 @@ enum InputEnum {
 
 function Index() {
   const { state } = useAuthState();
-  const [tools, setTools] =useState<Array<Tool>>([]);
+  const [tools, setTools] = useState<Array<Partial<Tool>>>([]);
   const firestore = useFirestore();
   const [inputData, setInputData] = useState<Partial<Tool>>({
     title:'',
