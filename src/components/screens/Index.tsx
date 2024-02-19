@@ -94,7 +94,7 @@ function Index() {
 
   return (
     <>
-      <Head title="TOP PAGE" />
+      <Head />
       <div className="hero min-h-screen bg-slate-800">
         <div className="max-w-5xl mx-auto">
           <form className="flex" onSubmit={handleFormSubmit}>
