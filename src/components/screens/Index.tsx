@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 import { Dialog } from '@headlessui/react';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from '~/components/contexts/UserContext';
 import { SignInButton } from '~/components/domain/auth/SignInButton';
 import { SignOutButton } from '~/components/domain/auth/SignOutButton';
@@ -94,33 +96,28 @@ function Index() {
     <>
       <Head title="TOP PAGE" />
       <div className="hero min-h-screen bg-slate-800">
-        <div className='max-w-5xl mx-auto'>
-          <form className='flex' onSubmit={handleFormSubmit}>
-            <input type='text' onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder='title' className='m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg'></input>
-            <input type='text' onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder='description' className='m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg'></input>
-            <input type='text' onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder='url' className='m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg'></input>
-            <button type='submit' className='m-4 border border-purple-500 p-5 rounded-lg transition-opacity bg-purple-600 bg-opacity-30 hover:bg-opacity-50 text-slate-50'>Add new tool</button>
+        <div className="max-w-5xl mx-auto">
+          <form className="flex" onSubmit={handleFormSubmit}>
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder="title" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder="url" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
+            <button type="submit" className="m-4 border border-purple-500 p-5 rounded-lg transition-opacity bg-purple-600 bg-opacity-30 hover:bg-opacity-50 text-slate-50">Add new tool</button>
           </form>
-          <table className='table w-full bg-transparent text-slate-50'>
-            <thead>
-              <tr>
-                <th className='bg-slate-900 border border-slate-700 text-white'>Title</th>
-                <th className='bg-slate-900 border border-slate-700 text-white'>Description</th>
-                <th className='bg-slate-900 border border-slate-700 text-white'>Link</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div className="grid grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
+          
               {
                 tools.map((tool) => (
-                  <tr key={tool.id}>
-                    <td className='bg-slate-800 border border-slate-700'>{tool.title}</td>
-                    <td className='bg-slate-800 border border-slate-700'>{tool.description}</td>
-                    <td className='bg-slate-800 border border-slate-700'>{tool.url}</td>
-                  </tr>
+                  <div key={tool.id} className="h-48 flex flex-col justify-between rounded-md shadow-slate-900 shadow-md p-4 bg-gradient-to-r from-slate-800 to-slate-700">
+                    <div>
+                      <div className="text-xl font-bold mb-2">{tool.title}</div>
+                      <div className="">{tool.description}</div>
+                    </div>
+                    <a className="text-slate-400" href={tool.url} target="_blank" rel="noreferrer">{tool.url}</a>
+                  </div>
                 ))
               }
-            </tbody>
-          </table>
+            
+          </div>
         </div>      
       </div>
       <ToastContainer />     
