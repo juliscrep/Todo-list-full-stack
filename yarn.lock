@@ -1478,6 +1478,11 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
+
 clsx@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.1.0.tgz#e851283bcb5c80ee7608db18487433f7b23f77cb"
@@ -3200,12 +3205,12 @@ react-router@6.22.1:
   dependencies:
     "@remix-run/router" "1.15.1"
 
-react-toastify@^10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-10.0.4.tgz#6ecdbbf923a07fc45850e69b0566efc7bf733283"
-  integrity sha512-etR3RgueY8pe88SA67wLm8rJmL1h+CLqUGHuAoNsseW35oTGJEri6eBTyaXnFKNQ80v/eO10hBYLgz036XRGgA==
+react-toastify@9.0.0-rc-2:
+  version "9.0.0-rc-2"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.0-rc-2.tgz#1a85dd8bb97871189ba8c17fef3090965e90c44f"
+  integrity sha512-ErWO+aINQ05zkZIqUxwGQjjhdW6649ANYgFiHY4ecZ8n8eYEhZTSKP0rp1lKEkDT9i4ZhMGrwnOWPk4wfkJsOQ==
   dependencies:
-    clsx "^2.1.0"
+    clsx "^1.1.1"
 
 react@^18.2.0:
   version "18.2.0"
