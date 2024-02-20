@@ -12,8 +12,6 @@ interface ImportMetaEnv {
   VITE_FIREBASE_APPID: string;
   VITE_USE_FIREBASE_EMULATOR: string;
   VITE_API_ORIGIN: string;
-
-  
 }
 
 
