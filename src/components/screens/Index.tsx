@@ -1,16 +1,11 @@
 /* eslint-disable no-unused-vars */
 
-import { Dialog } from '@headlessui/react';
 import { addDoc, collection, getDocs, query, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import React, { useEffect, useRef, useState } from 'react';
-import { useAuthState } from '~/components/contexts/UserContext';
-import { SignInButton } from '~/components/domain/auth/SignInButton';
-import { SignOutButton } from '~/components/domain/auth/SignOutButton';
+import React, { useEffect, useState } from 'react';
 import { Head } from '~/components/shared/Head';
 import { useFirestore } from '~/lib/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {PencilSquareIcon} from '@heroicons/react/24/outline';
 import ToolCard from '../shared/ToolCard';
 
 export type Tool = {
@@ -28,7 +23,6 @@ export enum InputEnum {
 }
 
 function Index() {
-  const { state } = useAuthState();
   const [tools, setTools] = useState<Array<Partial<Tool>>>([]);
   const firestore = useFirestore();
   const [inputData, setInputData] = useState<Partial<Tool>>({

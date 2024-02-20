@@ -19,7 +19,7 @@ const AuthReducer = (state: AuthState, action: AuthActions): AuthState => {
         state: 'SIGNED_IN',
         currentUser: action.payload.user,
       };
-      break
+      
     case "SIGN_OUT":
       return {
         state: 'SIGNED_OUT',
