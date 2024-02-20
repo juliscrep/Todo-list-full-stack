@@ -3,8 +3,8 @@ import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom'
 
 const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p>;
 
-const IndexScreen = lazy(() => import('~/components/screens/Index'));
-const Page404Screen = lazy(() => import('~/components/screens/404'));
+const IndexScreen = lazy(() => import('../../components/screens/Index'));
+const Page404Screen = lazy(() => import('../../components/screens/404'));
 
 function Layout() {
   return (
