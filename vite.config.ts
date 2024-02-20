@@ -11,12 +11,14 @@ export default defineConfig({
           if (id.includes('firebase')) {
             return 'firebase';
           }
-          if(id.includes('tsconfigPaths')){
+          if (id.includes('tsconfigPaths')) {
             return 'tsconfigPaths';
           }
-          
         },
       },
     },
+  },
+  optimizeDeps: {
+    include: ['react-toastify'],
   },
 });
