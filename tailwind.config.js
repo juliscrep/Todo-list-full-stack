@@ -1,11 +1,7 @@
 
 module.exports = {
-  mode: 'jit',
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    safeList: [],
-    content: ['./index.html', './src/**/*.tsx', './src/**/*.ts'],
-  },
+  content: ['./index.html', './src/**/*.tsx', './src/**/*.ts'],
+
   theme: {
     minWidth: {
       '40': '10rem',
@@ -19,7 +15,6 @@ module.exports = {
       '200': '50rem',
     }
   },
-  variants: {},
   plugins: [
     require('daisyui'),
   ],
