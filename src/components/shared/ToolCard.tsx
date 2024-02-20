@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { PencilSquareIcon, CheckIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, CheckIcon, XCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Tool, InputEnum } from "../screens/Index";
 import { useState } from "react";
 import clsx from "clsx";
@@ -7,9 +7,10 @@ import clsx from "clsx";
 interface ToolCardProps {
      tool: Tool,
      onUpdate: (id: string, data: Partial<Tool>) => void
+     onDelete: (id: string) => void 
 }
 
-const ToolCard = ({ tool, onUpdate} : ToolCardProps) => {
+const ToolCard = ({ tool, onUpdate, onDelete} : ToolCardProps) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
 
     const [inputData, setInputData] = useState<Partial<Tool>>(tool);
@@ -25,6 +26,12 @@ const ToolCard = ({ tool, onUpdate} : ToolCardProps) => {
         setIsEdit(false);
         if (tool.id) {
             onUpdate(tool.id, inputData);
+        }
+    }
+
+    const handleDelete = () => {
+        if (tool.id) {
+            onDelete(tool.id);
         }
     }
     
@@ -72,9 +79,17 @@ const ToolCard = ({ tool, onUpdate} : ToolCardProps) => {
                 <XCircleIcon onClick={onClose} className="h-6 w-6 text-red-700 absolute top-4 right-7 cursor-pointer" />
                 <CheckIcon onClick={handleUpdate} className="h-6 w-6 text-green-700 absolute top-4 right-14 cursor-pointer" />
                 </> : 
-                <button className="btn btn-active btn-ghost hidden group-hover:block absolute top-4 right-4 p-0" onClick={toggleIsEdit}>
+                <>
+                
+                <button className="btn btn-active btn-ghost hidden group-hover:block absolute top-4 right-12 p-0" onClick={toggleIsEdit}>
                     <PencilSquareIcon className="h-6 w-6 text-purple-600 cursor-pointer" />
                 </button>
+
+                <button className="btn btn-active  btn-ghost hidden group-hover:block absolute top-4 right-4 p-0">
+                   <TrashIcon onClick={handleDelete} className="h-6 w-6 text-purple-600 cursor-pointer" />
+                </button>
+
+                </>
                 
             }
             

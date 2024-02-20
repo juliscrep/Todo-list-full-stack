@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { Dialog } from '@headlessui/react';
-import { addDoc, collection, getDocs, query, doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from '~/components/contexts/UserContext';
 import { SignInButton } from '~/components/domain/auth/SignInButton';
@@ -74,6 +74,38 @@ function Index() {
     })
   }
 
+  const onDeleteTool = async (id: string) => {
+    try {
+      const docRef = doc(firestore, "tools", id);
+      await deleteDoc(docRef);
+      const updatedTools = tools.filter(tool => tool.id !== id);
+      setTools(updatedTools);
+      toast.success('🗑️ Deleted the tool successfully!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      toast.error('❌ Failed to delete the tool!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }
+  
+
 
   const handleInputChange = (field: InputEnum, value: string) => {
     setInputData({ ...inputData, [field]: value})
@@ -131,7 +163,7 @@ function Index() {
           
               {
                 tools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} onUpdate={onUpdateTool} />
+                  <ToolCard key={tool.id} tool={tool} onUpdate={onUpdateTool} onDelete={onDeleteTool} />
                 ))
               }
             
