@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { PencilSquareIcon, CheckIcon, XCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Tool, InputEnum } from "../screens/Index";
 import { useState } from "react";
