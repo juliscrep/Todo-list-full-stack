@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { Dialog } from '@headlessui/react';
-import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from '~/components/contexts/UserContext';
 import { SignInButton } from '~/components/domain/auth/SignInButton';
@@ -10,15 +10,17 @@ import { Head } from '~/components/shared/Head';
 import { useFirestore } from '~/lib/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {PencilSquareIcon} from '@heroicons/react/24/outline';
+import ToolCard from '../shared/ToolCard';
 
-type Tool = {
-  id: string,
-  title: string,
-  description: string,
-  url: string
+export type Tool = {
+  id?: string,
+  title?: string,
+  description?: string,
+  url?: string
 }
 
-enum InputEnum {
+export enum InputEnum {
   Id = 'id',
   Title = 'title',
   Description = 'description',
@@ -51,6 +53,60 @@ function Index() {
     fetchData();
   }, []);
 
+  const onUpdateTool = (id: string, data: Tool) => {
+    const docRef = doc(firestore, "tools",id);
+    updateDoc(docRef, data)
+    .then(docRef => {
+      toast.success('🦄 updated the tool successfully!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  const onDeleteTool = async (id: string) => {
+    try {
+      const docRef = doc(firestore, "tools", id);
+      await deleteDoc(docRef);
+      const updatedTools = tools.filter(tool => tool.id !== id);
+      setTools(updatedTools);
+      toast.success('🗑️ Deleted the tool successfully!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      toast.error('❌ Failed to delete the tool!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }
+  
+
+
   const handleInputChange = (field: InputEnum, value: string) => {
     setInputData({ ...inputData, [field]: value})
   }
@@ -67,7 +123,7 @@ function Index() {
         url: inputData.url
       } 
 
-      await addDoc(toolsCollection, newTool);
+      const docRef = await addDoc(toolsCollection, newTool);
       toast.success('🦄 Saved the tool successfully!', {
         position: "top-right",
         autoClose: 5000,
@@ -79,7 +135,7 @@ function Index() {
         theme: "dark",
         });
 
-      setTools([...tools, newTool]);
+      setTools([...tools, {id: docRef.id, ...newTool}]);
       setInputData({
         title:'',
         description: '',
@@ -97,23 +153,17 @@ function Index() {
       <Head />
       <div className="hero min-h-screen bg-slate-800">
         <div className="max-w-5xl mx-auto">
-          <form className="flex" onSubmit={handleFormSubmit}>
+          <form className="flex flex-row items-center justify-center" onSubmit={handleFormSubmit}>
             <input type="text" onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder="title" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-justify text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
             <input type="text" onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder="url" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <button type="submit" className="m-4 border border-purple-500 p-5 rounded-lg transition-opacity bg-purple-600 bg-opacity-30 hover:bg-opacity-50 text-slate-50">Add new tool</button>
+            <button type="submit" className="m-4 border border-purple-600 p-5 rounded-lg transition-opacity bg-purple-600 hover:bg-opacity-50 text-slate-50">Add new tool</button>
           </form>
           <div className="grid grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
           
               {
                 tools.map((tool) => (
-                  <div key={tool.id} className="h-48 flex flex-col justify-between rounded-md shadow-slate-900 shadow-md p-4 bg-gradient-to-r from-slate-800 to-slate-700">
-                    <div>
-                      <div className="text-xl font-bold mb-2">{tool.title}</div>
-                      <div className="">{tool.description}</div>
-                    </div>
-                    <a className="text-slate-400" href={tool.url} target="_blank" rel="noreferrer">{tool.url}</a>
-                  </div>
+                  <ToolCard key={tool.id} tool={tool} onUpdate={onUpdateTool} onDelete={onDeleteTool} />
                 ))
               }
             
