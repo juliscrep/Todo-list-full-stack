@@ -69,7 +69,9 @@ function Index() {
         });
 
     })
-    .catch()
+    .catch(error => {
+      console.log(error);
+    })
   }
 
 
@@ -89,7 +91,7 @@ function Index() {
         url: inputData.url
       } 
 
-      await addDoc(toolsCollection, newTool);
+      const docRef = await addDoc(toolsCollection, newTool);
       toast.success('🦄 Saved the tool successfully!', {
         position: "top-right",
         autoClose: 5000,
@@ -101,7 +103,7 @@ function Index() {
         theme: "dark",
         });
 
-      setTools([...tools, newTool]);
+      setTools([...tools, {id: docRef.id, ...newTool}]);
       setInputData({
         title:'',
         description: '',
@@ -123,13 +125,13 @@ function Index() {
             <input type="text" onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder="title" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
             <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-justify text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
             <input type="text" onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder="url" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <button type="submit" className="m-4 border border-purple-500 p-5 rounded-lg transition-opacity bg-purple-600 bg-opacity-30 hover:bg-opacity-50 text-slate-50">Add new tool</button>
+            <button type="submit" className="m-4 border border-purple-600 p-5 rounded-lg transition-opacity bg-purple-600 hover:bg-opacity-50 text-slate-50">Add new tool</button>
           </form>
           <div className="grid grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
           
               {
                 tools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
+                  <ToolCard key={tool.id} tool={tool} onUpdate={onUpdateTool} />
                 ))
               }
             

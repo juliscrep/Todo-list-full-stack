@@ -1,13 +1,15 @@
+/* eslint-disable no-unused-vars */
 import { PencilSquareIcon, CheckIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { Tool, InputEnum } from "../screens/Index";
 import { useState } from "react";
 import clsx from "clsx";
 
 interface ToolCardProps {
-     tool: Tool
+     tool: Tool,
+     onUpdate: (id: string, data: Partial<Tool>) => void
 }
 
-const ToolCard = ({ tool} : ToolCardProps) => {
+const ToolCard = ({ tool, onUpdate} : ToolCardProps) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
 
     const [inputData, setInputData] = useState<Partial<Tool>>(tool);
@@ -17,6 +19,13 @@ const ToolCard = ({ tool} : ToolCardProps) => {
     const onClose = () => {
         setIsEdit(false);
         setInputData(tool);
+    }
+
+    const handleUpdate = () => {
+        setIsEdit(false);
+        if (tool.id) {
+            onUpdate(tool.id, inputData);
+        }
     }
     
     const handleInputChange = (field: InputEnum, value: string) => {
@@ -43,7 +52,8 @@ const ToolCard = ({ tool} : ToolCardProps) => {
                     "cursor-text" : isEdit
                 })} value={inputData.title}
                 onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} />
-                <input className={clsx(inputClasses, {
+                <input className={clsx(inputClasses,
+                "w-full", {
                     "bg-black" : isEdit,
                     "cursor-text" : isEdit
                 })} value={inputData.description}
@@ -59,8 +69,8 @@ const ToolCard = ({ tool} : ToolCardProps) => {
             {
                 isEdit ?
                 <>
-                <XCircleIcon className="h-6 w-6 text-red-700 absolute top-4 right-7 cursor-pointer" />
-                <CheckIcon className="h-6 w-6 text-green-700 absolute top-4 right-14 cursor-pointer" />
+                <XCircleIcon onClick={onClose} className="h-6 w-6 text-red-700 absolute top-4 right-7 cursor-pointer" />
+                <CheckIcon onClick={handleUpdate} className="h-6 w-6 text-green-700 absolute top-4 right-14 cursor-pointer" />
                 </> : 
                 <button className="btn btn-active btn-ghost hidden group-hover:block absolute top-4 right-4 p-0" onClick={toggleIsEdit}>
                     <PencilSquareIcon className="h-6 w-6 text-purple-600 cursor-pointer" />
