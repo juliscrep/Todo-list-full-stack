@@ -9,8 +9,8 @@ const Page404Screen = lazy(() => import('../../components/screens/404'));
 function Layout() {
   return (
     <div>
-      <nav className="p-4 flex items-center text-white justify-between bg-slate-800">
-        <p className="text-3xl">Tools<span className="text-purple-500">AI</span></p>
+      <nav className="p-5 flex items-center text-white justify-between bg-slate-800">
+        <p className="text-5xl">Tools<span className="text-purple-500">AI</span></p>
       </nav>
       <Outlet />
     </div>
