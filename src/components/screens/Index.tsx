@@ -147,13 +147,13 @@ function Index() {
       <Head />
       <div className="hero min-h-screen bg-slate-800">
         <div className="max-w-5xl mx-auto">
-          <form className="flex flex-row items-center justify-center" onSubmit={handleFormSubmit}>
-            <input type="text" onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder="title" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-justify text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <input type="text" onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder="url" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg" />
-            <button type="submit" className="m-4 border border-purple-600 p-5 rounded-lg transition-opacity bg-purple-600 hover:bg-opacity-50 text-slate-50">Add new tool</button>
+          <form className="flex flex-col items-center justify-center md:flex-row m-2" onSubmit={handleFormSubmit}>
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)} value={inputData.title} placeholder="title" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg sm:w-21 sm:m-2" />
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)} value={inputData.description} placeholder="description" className="m-4 text-justify text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg sm:w-21 sm:m-2" />
+            <input type="text" onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)} value={inputData.url} placeholder="url" className="m-4 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg sm:w-20 sm:m-2" />
+            <button type="submit" className="m-4 border border-purple-600 p-5 rounded-lg transition-opacity bg-purple-600 hover:bg-opacity-50 text-slate-50 text-sx md:text-1xl">Add new tool</button>
           </form>
-          <div className="grid grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full bg-transparent text-slate-50 mb-5">
           
               {
                 tools.map((tool) => (
